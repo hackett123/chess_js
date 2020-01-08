@@ -22,6 +22,7 @@
     "express-session": "*",
     "lru-cache": "*",
     "nodemon": "^2.0.2",
+    "serve-favicon": "^2.5.0",
     "socket.io": "^2.3.0",
     "underscore": "^1.9.1"
   }
