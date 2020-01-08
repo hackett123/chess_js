@@ -46,7 +46,10 @@ io.on('connection', function (socket) {
         messenger_routes.emit_room_message(io, room, username, 'room message', msg)
     })
 });
-
+app.get('/favicon.ico', function(req, res) {
+    console.log("RECIEVED FAVICON REQUEST")
+    res.sendfile('./images/favicon.ico')
+})
 app.get('/', routes.get_splash)
 app.get('/home', routes.get_home)
 app.get('/login', routes.get_login)
