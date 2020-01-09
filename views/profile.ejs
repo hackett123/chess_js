@@ -8,7 +8,7 @@
         var socket = io();
     </script>
     <script type="text/javascript">
-        
+
         var username;
         var pageUsername;
         var isFriend;
@@ -17,11 +17,11 @@
 
         function hypername(name) {
             var link = "\"\\profile\\" + name + "\"";
-            return "<a href="+link+ ">"+name+"</a>";
+            return "<a href=" + link + ">" + name + "</a>";
         }
 
         function prettyFriend(friend, status) {
-            var fullStatus = status ? "<font color=\"green\"> (Online)</font>" : 
+            var fullStatus = status ? "<font color=\"green\"> (Online)</font>" :
                 "<font color=\"red\"> (Offline)</font>"
             if (!friend || !status) {
                 return "";
@@ -32,7 +32,7 @@
 
         function addFriend() {
             console.log("addFriend called");
-            $.post('/createFriendship', {userA:username, userB:pageUsername}, function(data, status) {
+            $.post('/createFriendship', { userA: username, userB: pageUsername }, function (data, status) {
                 pageLoad();
             });
         }
@@ -43,8 +43,8 @@
         }
 
         function getMonth(i) {
-            var monthNames = [ "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December" ];
+            var monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"];
             return monthNames[i - 1];
         }
 
@@ -53,12 +53,12 @@
             console.log(parts);
             var year = parts[0];
             var month = getMonth(parseInt(parts[1], 10));
-            var day = parseInt(parts[2].substring(0,2));
-            return month + " " + day + ", " + year; 
+            var day = parseInt(parts[2].substring(0, 2));
+            return month + " " + day + ", " + year;
         }
 
         function updateInfo() {
-            $.get('/getUserObject/'+ pageUsername, function(user) {
+            $.get('/getUserObject/' + pageUsername, function (user) {
                 if (isFriend) {
                     var info = "<div class=\"box\">";
                     info += "<div class = \"card\"><div class =\" has-text-centered\">Info Yo!</div>";
@@ -76,7 +76,7 @@
                 username = user.username;
                 if (!pageUsername || pageUsername === "" || pageUsername === username) {
                     // if my profile page
-                    pageUsername = username; 
+                    pageUsername = username;
                     isFriend = true;
                     $('#username').html("Hello " + username + ", this is your account page");
                     // $('#friends').prepend("Here are all your friends...<br>");
@@ -84,7 +84,7 @@
                     updateInfo();
                 } else {
                     // determine if friends with page's user
-                    $.get('/areFriends/' + pageUsername, function(result) {
+                    $.get('/areFriends/' + pageUsername, function (result) {
                         isFriend = result;
                         var friendStatus = "<br>You two are " + (isFriend ? "" : "NOT") + " friends";
                         if (!isFriend) {
@@ -96,7 +96,7 @@
                         }
                         $('#username').html("Hello " + username + ", this is the account page for " + pageUsername + "!" + friendStatus);
                         updateInfo();
-                    });  
+                    });
                 }
             });
         }
@@ -111,8 +111,8 @@
             pageUsername = '<%= pageUsername %>';
             pageLoad();
         })
-        
-        
+
+
     </script>
 </head>
 
@@ -121,35 +121,16 @@
     <div class="section">
         <div class="container">
             <div class="columns is-multiline">
-                <div class="column is-one-quarter">
+                <div class="column is-one-third">
                     <div class="box">
                         <div class="card" id="username">
                             Account page for...
                         </div>
-                        <div class = "card" id = "friends">
-                            <ul id="friendList"></ul>
-                        </div>
                     </div>
-                    <div id="profileInfo"></div>
-                    <div id="friendRecs"></div>
                 </div>
-                <div class="column">
-                    <div class="box" id="newPost">
-                        <div class="field">
-                            <label class="label">Tell us What's Up</label>
-                            <div class="control">
-                              <textarea class="textarea" placeholder="type a post here :)" id ="newPostText"></textarea>
-                            </div>
-                          </div>
-                        <div class="control">
-                            <button class="button is-link" onclick="sendPost()">Post</button>
-                        </div>
-                    </div>
-                    <ul id="newPostFeed"></ul>
-                    <div class="box" id = "postFeed">
-                        <div class="card">
-                            No more posts...
-                        </div>
+                <div class="column is-one-third">
+                    <div class="box">
+                        <div id="profileInfo"></div>
                     </div>
                 </div>
             </div>
